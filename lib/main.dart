@@ -1,13 +1,40 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  double humidity = 0.0;
+
   Widget build(BuildContext context) {
+
+
+    DatabaseReference database = FirebaseDatabase.instance.ref();
+    database.child('Sensor/humudity').onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      humidity = snapshot.value as double;
+      print(humidity);
+
+    });
+
+
+
+
+
     return MaterialApp(
 
       home: Scaffold(
@@ -47,7 +74,7 @@ class MyApp extends StatelessWidget {
                     ),
                     BoxWidget(
                       color: Colors.orange,
-                      percent: 0.90,
+                      percent: 0.5,
                       title: 'AIR HUMIDITY',
                     ),
                   ],
