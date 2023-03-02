@@ -23,7 +23,6 @@ class _MyAppState extends State<MyApp> {
 
 
   double _temperature = 0.0;
-  double _soil_temperature = 0.0;
   double _soilMoisture = 0.0;
   double _humidity = 0.0;
   bool _pumpStatus = false;
@@ -41,6 +40,7 @@ class _MyAppState extends State<MyApp> {
       print(data);
       setState(() {
         _pumpStatus = data["inOn"];
+
       });
     } );
     sensorRef.onValue.listen( (DatabaseEvent event) {
@@ -48,10 +48,9 @@ class _MyAppState extends State<MyApp> {
       print(data);
       setState(() {
         _temperature = data["temperature"] / 100;
-
         _humidity = data["humudity"] / 100;
         _soilMoisture = data["soil_moisture"] / 100;
-        _soil_temperature = data["Soil_temperature"]/100;
+
       });
     } );
   }
@@ -136,32 +135,24 @@ class _MyAppState extends State<MyApp> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-
                       Row(
                         children: <Widget>[
                           BoxWidget(
                             color: Colors.blue,
                             percent: _soilMoisture,
                             title: 'SOIL MOISTURE',
-                              icon: Icons.water_drop
-                          ),
-                          BoxWidget(
-                            color: Colors.green,
-                            percent: _soil_temperature,
-                            title: 'SOIL TEMPERATURE',
-                              icon: Icons.thermostat,
+                            icon: Icons.water_drop,
                           ),
                         ],
                       ),
                       SizedBox(height: 16.0),
-
                       Row(
                         children: <Widget>[
                           BoxWidget(
                             color: Colors.red,
                             percent: _temperature,
                             title: 'AIR TEMPERATURE',
-                              icon: WeatherIcons.celsius,
+                            icon: WeatherIcons.celsius,
                           ),
                           BoxWidget(
                             color: Colors.orange,
@@ -178,9 +169,8 @@ class _MyAppState extends State<MyApp> {
                           Text(
                             _pumpStatus ? 'MOTOR ON' : 'MOTOR OFF',
                             style: TextStyle(
-                                fontSize: 16.0,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold,
-
                             ),
                           ),
                           SizedBox(width: 16.0,),
@@ -189,7 +179,7 @@ class _MyAppState extends State<MyApp> {
                             activeColor: Colors.lightGreen,
                             onChanged: (value){
                               // setData();
-                              () async {
+                                  () async {
                                 print("äsd");
                                 final snapshot = await motorRef.child("inOn").get();
                                 final motorInOn = snapshot.value as bool;
@@ -200,36 +190,22 @@ class _MyAppState extends State<MyApp> {
                                 });
                                 setState(() {
                                   _pumpStatus = value;
+
                                 });
                                 // print(  );
                               }();
                             },
                           ),
                           SizedBox(width: 16.0,),
-
                         ],
-                      )
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: <Widget>[
-                      //     Text(
-                      //       'PUMP STATUS',
-                      //       style: TextStyle(fontSize: 16.0),
-                      //     ),
-                      //     SizedBox(width: 16.0),
-                      //     Switch(
-                      //       value: _pumpStatus,
-                      //       onChanged: (value) {},
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(height: 16.0),
+                      ),
                       // FlatButton(
                       //   onPressed: (){},
                       //   child: Text("toggle"),
-                      ,
+                      // ),
                     ],
                   );
+                  ;
                 }
             ),
             // child: Column(
