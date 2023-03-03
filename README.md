@@ -1,16 +1,5 @@
 # smart_farm
 
-A new Flutter project.
+In this project, we made an IoT based smart agriculture monitoring and automatic irrigation system using ESP8266 NodeMCU. We used multiple sensors like capacitive soil moisture sensor to measure the moisture content present in the soil, DHT22 humidity and temperature sensor to measure the air temperature and humidity. To monitor soil relative humidity, air temperature and relative humidity of air, we have made a mobile application using Flutter as a framework. A power relay was used to control the water pump, whenever a low quantity of moisture is detected in the soil. The motor automatically turns ON and hence the irrigation is done automatically. Once the soil becomes wet the motor turns OFF automatically. All these happenings can be monitored and controlled remotely using the ESP8266 NodeMCU board and Farmitter.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
