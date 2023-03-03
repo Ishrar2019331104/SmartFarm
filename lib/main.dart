@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -10,7 +12,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -38,6 +43,62 @@ class _MyAppState extends State<MyApp> {
     motorRef.onValue.listen( (DatabaseEvent event) {
       final data = event.snapshot.value as Map<dynamic, dynamic>;
       print(data);
+      if(data["inOn"])
+        {
+          // print('inside the if');
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text(
+                    'MOTOR IS SWITCHED ON',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold
+                  ),
+
+                ),
+                backgroundColor: Colors.white, // set background color
+                elevation: 5, // set elevation
+                shape: RoundedRectangleBorder( // set border radius
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              );
+            },
+          );
+
+          Timer(Duration(seconds: 1), () {
+            Navigator.of(context).pop(); // pop dialog after 1 second
+          });
+
+        }
+      if(data["inOn"]==false)
+      {
+        // print('inside the if');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(
+                'MOTOR IS SWITCHED OFF',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold
+                ),
+
+              ),
+              backgroundColor: Colors.white, // set background color
+              elevation: 5, // set elevation
+              shape: RoundedRectangleBorder( // set border radius
+                borderRadius: BorderRadius.circular(10),
+              ),
+            );
+          },
+        );
+
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop(); // pop dialog after 1 second
+        });
+
+      }
       setState(() {
         _pumpStatus = data["inOn"];
 
@@ -92,22 +153,18 @@ class _MyAppState extends State<MyApp> {
       print("asd");
 
     }
-    return MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-
-      home: Scaffold(
+    return Scaffold(
 
         appBar: AppBar(
           title: Text(
-              'Farmitter',
+              'FARMITTER',
             style: TextStyle(
               letterSpacing: 2.0,
             ),
           ),
           elevation: 0.0,
           centerTitle: true,
-          backgroundColor: Colors.lightGreen[400]
+          backgroundColor: Color(0xFF869b5b)
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -263,8 +320,7 @@ class _MyAppState extends State<MyApp> {
             // ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
