@@ -6,3 +6,5 @@ The project was made by me and Rabbani2019331039 for our PROJECT 250 course duri
 
 
 
+preview of Farmitter:
+![image](farmitter.png)
